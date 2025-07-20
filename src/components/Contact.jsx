@@ -1,17 +1,27 @@
-// src/components/Contact.jsx
-import React from "react";
+// src/pages/Contact.jsx
+import React from 'react';
 
-export default function Contact({ onClose }) {
+const Contact = () => {
   return (
-    <div className="p-4 border rounded shadow-md bg-gray-100 relative">
-      <button
-        onClick={onClose}
-        className="absolute top-2 right-2 text-sm bg-red-500 text-white px-2 rounded hover:bg-red-600"
-      >
-        ×
-      </button>
-      <h2 className="text-xl font-bold mb-2">📇 Contact</h2>
-      <p>Drop Meera a message or find her social links here.</p>
+    <div className="p-6 max-w-xl mx-auto">
+      <h2 className="text-2xl font-bold mb-4">Contact Me</h2>
+      <ul className="space-y-3 text-lg">
+        <li><strong>📞 Phone:</strong> +91 9718519929</li>
+        <li>
+          <strong>💼 LinkedIn:</strong>{' '}
+          <a
+            href="https://www.linkedin.com/in/meera-raina-58b54429/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-600 underline"
+          >
+            meera-raina-58b54429
+          </a>
+        </li>
+        <li><strong>📧 Email:</strong> meera.raina011@gmail.com</li>
+      </ul>
     </div>
   );
-}
+};
+
+export default Contact;

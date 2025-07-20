@@ -1,55 +1,87 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 
-function App() {
-  const [activeApp, setActiveApp] = useState(null);
+import './index.css';
+import Resume from "./components/Resume";
+import Contact from "./components/Contact";
+import GenAI from "./components/genai/GenAI";
+import Certifications from "./components/Certifications";
+
+
+import PromptCoach from "./components/genai/PromptCoach";
+import PersonalChef from './components/genai/PersonalChef';
+import MBTI from './components/genai/MBTITest';
+import VoiceAgent from './components/genai/VoiceAgent';
+
+const Home = ({ toggleDarkMode, isDark }) => {
+  const navigate = useNavigate();
 
   const handleAppClick = (appName) => {
-    setActiveApp(appName);
-  };
-
-  const renderContent = () => {
-    switch (activeApp) {
-      case 'Resume':
-        window.open("https://drive.google.com/file/d/1pAtu9gx93vnzZ15uHxh9e1MgWa66yXrV/view?usp=drive_link", "_blank");
-        return null;
-      case 'Blog':
-        window.open("https://ctrlaltopinion.wordpress.com/", "_blank");
-        return null;
-      default:
-        return (
-          <div className="grid grid-cols-2 gap-6 mt-10 text-center text-white">
-            <div onClick={() => handleAppClick("Resume")} className="cursor-pointer">
-              <div className="text-4xl">📄</div>
-              <div className="mt-2 text-sm font-medium">Resume</div>
-            </div>
-            <div onClick={() => handleAppClick("Blog")} className="cursor-pointer">
-              <div className="text-4xl">✍️</div>
-              <div className="mt-2 text-sm font-medium">Blog</div>
-            </div>
-            <div className="cursor-pointer">
-              <div className="text-4xl">🤖</div>
-              <div className="mt-2 text-sm font-medium">Gen AI Work</div>
-              <div className="mt-2 space-y-1 text-xs text-gray-300">
-                <div onClick={() => window.open("https://www.perplexity.ai/collections/prompt-coach-meera%20raina-W73lUB6fR66h_I3w0_owkw", "_blank")} className="underline hover:text-blue-300">Prompt Coach</div>
-                <div onClick={() => window.open("https://www.perplexity.ai/collections/personal-chef%206Rlp1b0aQyqkO1b6.zpmCw", "_blank")} className="underline hover:text-blue-300">Personal Chef AI</div>
-                <div onClick={() => window.open("https://docs.google.com/forms/d/e/1FAIpQLSfQI3Qq4oh9FgPBI9U9andviPCeoRdXr_njAqAgXtWqD203Pw/viewform?usp=sharing&ouid=105535942989488211270", "_blank")} className="underline hover:text-blue-300">MBTI Test</div>
-                <div className="text-gray-400">Voice Agent:<br/> +1 (341) 587 9436 (Mira)</div>
-              </div>
-            </div>
-          </div>
-        );
-    }
+    navigate(`/${appName}`);
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 p-10 text-white">
-      <h1 className="text-3xl font-bold text-center mb-6">Meera Raina's OS</h1>
-      {renderContent()}
+    <div className="min-h-screen flex flex-col items-center justify-center p-6 bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white">
+      <button
+        onClick={toggleDarkMode}
+        className="absolute top-4 right-4 bg-gray-200 dark:bg-gray-700 text-sm px-3 py-1 rounded"
+      >
+        {isDark ? "Light Mode" : "Dark Mode"}
+      </button>
+
+      <h1 className="text-4xl font-bold mb-10">MeeraOS</h1>
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+        <div onClick={() => handleAppClick("Resume")} className="cursor-pointer text-center">
+          <div className="text-3xl">📄</div>
+          <div className="mt-1 text-sm font-medium">Resume</div>
+        </div>
+        <div onClick={() => handleAppClick("Blog")} className="cursor-pointer text-center">
+          <div className="text-3xl">✍️</div>
+          <div className="mt-1 text-sm font-medium">Blog</div>
+        </div>
+        <div onClick={() => handleAppClick("GenAI")} className="cursor-pointer text-center">
+          <div className="text-3xl">🤖</div>
+          <div className="mt-1 text-sm font-medium">Gen AI Work</div>
+        </div>
+        <div onClick={() => handleAppClick("Contact")} className="cursor-pointer text-center">
+          <div className="text-3xl">📞</div>
+          <div className="mt-1 text-sm font-medium">Contact</div>
+        </div>
+        <div onClick={() => handleAppClick("Certifications")} className="cursor-pointer text-center">
+          <div className="text-3xl">🎓</div>
+          <div className="mt-1 text-sm font-medium">Certifications</div>
+        </div>
+      </div>
     </div>
   );
-}
+};
+
+const App = () => {
+  const [isDark, setIsDark] = useState(false);
+
+  const toggleDarkMode = () => {
+    setIsDark(!isDark);
+    document.documentElement.classList.toggle("dark");
+  };
+
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home toggleDarkMode={toggleDarkMode} isDark={isDark} />} />
+        <Route path="/Resume" element={<Resume />} />
+        <Route path="/Blog" element={<Blog />} />
+        <Route path="/GenAI" element={<GenAI />} />
+        <Route path="/Contact" element={<Contact />} />
+        <Route path="/Certifications" element={<Certifications />} />
+        <Route path="/GenAI/PromptCoach" element={<PromptCoach />} />
+        <Route path="/GenAI/PersonalChef" element={<PersonalChef />} />
+        <Route path="/GenAI/MBTI" element={<MBTI />} />
+        <Route path="/GenAI/VoiceAgent" element={<VoiceAgent />} />
+      </Routes>
+    </Router>
+  );
+};
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
