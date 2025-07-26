@@ -5,8 +5,9 @@ import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-route
 import './index.css';
 import Resume from "./components/Resume";
 import Contact from "./components/Contact";
-import GenAI from "./components/genai/genaiprojects.jsx";
+import GenAI from "./components/genai/GenAI";
 import Certifications from "./components/Certifications";
+import Blog from './components/Blog';
 
 
 import PromptCoach from "./components/genai/PromptCoach";
