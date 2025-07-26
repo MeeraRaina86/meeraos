@@ -1,53 +1,43 @@
-import React from "react";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
-const Resume = ({ onClose }) => {
+const Resume = () => {
   return (
-    <div className="bg-white rounded-lg shadow-md p-4 max-w-md mx-auto mt-6 border border-gray-300">
-      <div className="flex justify-between items-center border-b pb-2 mb-2">
-        <h2 className="text-lg font-bold">📄 Resume</h2>
-        <button
-          className="text-gray-400 hover:text-red-500 text-lg"
-          onClick={onClose}
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.3 }}
+      className="min-h-screen w-full flex flex-col items-center justify-center p-4 relative"
+    >
+      {/* Back button positioned at the top left */}
+      <Link 
+        to="/" 
+        className="absolute top-4 left-4 bg-gray-200 dark:bg-gray-700 text-sm px-4 py-2 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+      >
+        &larr; Back
+      </Link>
+
+      <div className="text-center">
+        <h2 className="text-2xl md:text-3xl font-bold mb-4">View My Professional Profile</h2>
+        <p className="text-gray-600 dark:text-gray-300 mb-8">Click the button below to view or download my resume.</p>
+        
+        {/* Modern, eye-catching button for the resume link */}
+        <a
+          href="https://drive.google.com/file/d/1pAtu9gx93vnzZ15uHxh9e1MgWa66yXrV/view?usp=sharing"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-3 text-lg px-8 py-4 bg-gradient-to-r from-purple-500 to-blue-600 text-white rounded-lg shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 transform"
         >
-          ×
-        </button>
+          {/* This SVG icon will now be correctly sized */}
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+          </svg>
+          Download Resume (PDF)
+        </a>
       </div>
-      <p className="text-gray-700 text-sm">
-  Project Manager – Healthcare IT ( Pharmacovigilance, E2E Delivery)
-Phone: +91 9718519929 | Email: Meera_011@yahoo.com | Voice Agent (VAPI): +1 (341) 587 9436 (Mira)
-PROFESSIONAL SUMMARY Seasoned IT Project Manager with over 16 years of experience delivering
-complex, high-impact projects across the US healthcare and pharmacovigilance domains. Proven track
-record in leading cross-functional teams through end-to-end project life cycles using Scrum and Agile
-methodologies. Adept at release management, stakeholder collaboration, and aligning project delivery with
-business goals. Certified PMP and CSM with expertise in prompt engineering for Gen AI tools, scripting in
-Python, and building macros for deployment tracking and business requirements progress.
-CORE COMPETENCIES • Healthcare & Pharmacovigilance Projects • Project & Release Management • Scrum,
-Agile Delivery • E2E Project Lifecycle Execution • Cross-functional Team Leadership • Stakeholder
-Management • Prompt Engineering (ChatGPT, Gemini, Claude, Perplexity, CoPilot) • Python Scripting &
-Macro Automation • Deployment Tracking & Reporting • Running LLMs offline using LM Studio for data
-privacy
-PROFESSIONAL EXPERIENCE IQVIA – Delivery Manager / Scrum Master Apr 2019 – Present - Transitioned
-across roles from Test Manager to Scrum Master to Release Manager within high-regulation US healthcare
-projects, focusing on pharmacovigilance and patient safety systems. - Managed release cycles, crossfunctional
-alignment, and Agile ceremonies for critical product launches. - Spearheaded prompt-based
-automation initiatives using Gen AI tools to support documentation, testing, and release notes. - Created
-Python scripts and macros to automate deployment validation and business requirement tracking, and
-working with automation tools like Power Automate, Make, and Langflow. - Received Bronze and Silver
-Impact Awards for exceptional contribution.
-Accenture – Team Lead Apr 2015 – Apr 2019 - Led distributed Agile teams in healthcare accounts; focused
-on quality assurance and continuous improvement. - Improved delivery timelines through process
-automation and test optimization. - Honored with the ACE Award for high-impact delivery.
-CSC – Senior Test Engineer Feb 2011 – Apr 2015 - Worked on quality assurance across critical projects; key
-contributor to Agile transformation. - Developed test automation and defect management practices across
-multiple applications.
-TCS – Assistant Systems Engineer Nov 2008 – Feb 2011 - Delivered system testing and collaborated closely
-with developers to resolve defects early in SDLC. - Supported key client engagements with successful
-outcomes.
-EDUCATION Bachelor of Engineering (B.E.) – Computer Science Jammu University | 2004 – 2008
-AI Generalist Fellowship
-Outskill | Apr 2025 – Present
-      </p>
-    </div>
+    </motion.div>
   );
 };
 
