@@ -10,10 +10,10 @@ import Certifications from "./components/Certifications";
 import Blog from './components/Blog';
 
 
-import PromptCoach from "./components/genai/PromptCoach";
-import PersonalChef from './components/genai/PersonalChef';
-import MBTI from './components/genai/MBTITest';
-import VoiceAgent from './components/genai/VoiceAgent';
+import PromptCoach from "./components/GenAI/PromptCoach";
+import PersonalChef from './components/GenAI/PersonalChef';
+import MBTI from './components/GenAI/MBTITest';
+import VoiceAgent from './components/GenAI/VoiceAgent';
 
 const Home = ({ toggleDarkMode, isDark }) => {
   const navigate = useNavigate();
