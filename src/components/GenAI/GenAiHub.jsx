@@ -14,17 +14,95 @@ const GenAI = () => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.3 }}
-      className="min-h-screen bg-gray-100 dark:bg-gray-900 p-4 relative"
+      className="min-h-screen p-6 relative"
+      style={{
+        minHeight: '100vh',
+        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)',
+        padding: '1.5rem',
+        position: 'relative'
+      }}
     >
       <Link
         to="/"
-        className="absolute top-4 left-4 bg-gray-200 dark:bg-gray-700 text-sm px-4 py-2 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+        className="absolute top-6 left-6 bg-white/20 backdrop-blur-sm text-white text-sm px-6 py-3 rounded-full border border-white/30 hover:bg-white/30 transition-all duration-300 shadow-lg font-medium"
+        style={{
+          position: 'absolute',
+          top: '1.5rem',
+          left: '1.5rem',
+          backgroundColor: 'rgba(255, 255, 255, 0.2)',
+          backdropFilter: 'blur(10px)',
+          color: 'white',
+          fontSize: '0.875rem',
+          padding: '0.75rem 1.5rem',
+          borderRadius: '9999px',
+          border: '1px solid rgba(255, 255, 255, 0.3)',
+          textDecoration: 'none',
+          fontWeight: '500',
+          boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+          transition: 'all 0.3s ease'
+        }}
       >
-        &larr; Back
+        ← Back to Home
       </Link>
-      <div className="max-w-4xl mx-auto pt-16">
-        <h2 className="text-3xl font-bold mb-6 text-center text-gray-900 dark:text-white">AI & Gen AI Projects</h2>
-        <div className="grid md:grid-cols-2 gap-4">
+
+      <div 
+        className="max-w-4xl mx-auto pt-20"
+        style={{
+          maxWidth: '56rem',
+          margin: '0 auto',
+          paddingTop: '5rem'
+        }}
+      >
+        {/* Header */}
+        <div 
+          className="text-center mb-12"
+          style={{
+            textAlign: 'center',
+            marginBottom: '3rem'
+          }}
+        >
+          <div 
+            style={{
+              fontSize: '4rem',
+              marginBottom: '1rem'
+            }}
+          >
+            🤖
+          </div>
+          
+          <h2 
+            className="text-4xl font-bold text-white mb-4 drop-shadow-lg"
+            style={{
+              fontSize: '2.25rem',
+              fontWeight: 'bold',
+              color: 'white',
+              marginBottom: '1rem',
+              textShadow: '0 4px 8px rgba(0, 0, 0, 0.3)'
+            }}
+          >
+            AI & Gen AI Projects
+          </h2>
+          
+          <p 
+            className="text-lg text-white/90"
+            style={{
+              fontSize: '1.125rem',
+              color: 'rgba(255, 255, 255, 0.9)'
+            }}
+          >
+            Exploring the frontiers of artificial intelligence
+          </p>
+        </div>
+
+        {/* Project Grid */}
+        <div 
+          className="grid md:grid-cols-2 gap-6"
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+            gap: '1.5rem'
+          }}
+        >
           <PromptCoach />
           <PersonalChef />
           <VoiceAgent />
