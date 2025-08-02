@@ -1,7 +1,15 @@
 import React from "react";
 import { motion } from 'framer-motion';
 
-const HealthMythDebunker = () => {
+
+import PromptCoach from "./PromptCoach";
+import PersonalChef from "./PersonalChef";
+import VoiceAgent from "./VoiceAgent";
+import MBTITest from "./MBTITest";
+import HealthMythDebunker from "./HealthMythDebunker";
+
+const GenAI = () => {
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -59,6 +67,24 @@ const HealthMythDebunker = () => {
           >
             An AI-powered tool that helps separate health facts from fiction by analyzing and debunking common health myths with evidence-based information.
           </p>
+
+        </div>
+
+        {/* Project Grid */}
+        <div 
+          className="grid md:grid-cols-2 gap-6"
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+            gap: '1.5rem'
+          }}
+        >
+          <PromptCoach />
+          <PersonalChef />
+          <VoiceAgent />
+          <MBTITest />
+          <HealthMythDebunker />
+
           <a
             href="https://health-myth-debunker-xe96.vercel.app/"
             target="_blank"
@@ -80,6 +106,7 @@ const HealthMythDebunker = () => {
           >
             Try Health Debunker →
           </a>
+
         </div>
       </div>
     </motion.div>
