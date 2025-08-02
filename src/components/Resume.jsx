@@ -3,13 +3,15 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 const Resume = ({ isDark }) => {
+  // Google Drive preview/view link
+  const resumeViewLink = "https://drive.google.com/file/d/1pAtu9gx93vnzZ15uHxh9e1MgWa66yXrV/view";
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.3 }}
-      className="min-h-screen w-full flex flex-col items-center justify-center p-4 relative"
       style={{
         minHeight: '100vh',
         width: '100%',
@@ -19,70 +21,81 @@ const Resume = ({ isDark }) => {
         justifyContent: 'center',
         padding: '1rem',
         position: 'relative',
-        backgroundColor: isDark ? '#111827' : '#f3f4f6' // Dark mode background
+        color: 'white',
+        background: isDark
+          ? 'linear-gradient(135deg, rgb(31, 41, 55) 0%, rgb(17, 24, 39) 100%)'
+          : 'linear-gradient(135deg, rgb(102, 126, 234) 0%, rgb(118, 75, 162) 100%)',
       }}
     >
-      <Link 
-        to="/" 
-        className="absolute top-4 left-4 bg-gray-200 dark:bg-gray-700 text-sm px-4 py-2 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+      <Link
+        to="/"
         style={{
           position: 'absolute',
-          top: '1rem',
-          left: '1rem',
-          backgroundColor: isDark ? 'rgba(255, 255, 255, 0.1)' : '#e5e7eb',
-          color: isDark ? 'white' : '#374151',
+          top: '1.5rem',
+          left: '1.5rem',
+          backgroundColor: 'rgba(255, 255, 255, 0.2)',
+          backdropFilter: 'blur(10px)',
+          color: 'white',
+          fontSize: '0.875rem',
+          padding: '0.75rem 1.5rem',
+          borderRadius: '9999px',
           textDecoration: 'none',
+          border: '1px solid rgba(255, 255, 255, 0.3)',
+          fontWeight: '500'
         }}
       >
-        ← Back
+        ← Back to Home
       </Link>
 
-      <div 
-        className="text-center"
-        style={{ textAlign: 'center' }}
-      >
-        <h2 
-          className="text-2xl md:text-3xl font-bold mb-4"
-          style={{
+      <div style={{ textAlign: 'center' }}>
+        <h2 style={{
             fontSize: '1.875rem',
             fontWeight: 'bold',
             marginBottom: '1rem',
-            color: isDark ? 'white' : '#111827'
+            color: 'white'
           }}
         >
           View My Professional Profile
         </h2>
-        <p 
-          className="mb-8"
-          style={{
-            color: isDark ? '#d1d5db' : '#4b5563',
+        <p style={{
+            color: 'rgba(255, 255, 255, 0.9)',
             marginBottom: '2rem'
           }}
         >
-          Click the button below to view or download my resume.
+          Click the button below to view my resume in a new tab.
         </p>
         
         <a
-          href="https://drive.google.com/file/d/1pAtu9gx93vnzZ15uHxh9e1MgWa66yXrV/view?usp=sharing"
+          href={resumeViewLink}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-3 text-lg px-8 py-4 bg-gradient-to-r from-purple-500 to-blue-600 text-white rounded-lg shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 transform"
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '0.75rem',
+            fontSize: '1.125rem',
+            padding: '1rem 2rem',
+            background: 'linear-gradient(to right, rgb(168, 85, 247), rgb(37, 99, 235))',
+            color: 'white',
+            borderRadius: '0.5rem',
+            boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05)',
+            textDecoration: 'none',
+            transition: 'all 0.3s ease',
+          }}
+          onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+          onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
         >
-          <svg 
-            xmlns="http://www.w3.org/2000/svg" 
-            className="h-4 w-4" 
-            fill="none" 
-            viewBox="0 0 24 24" 
-            stroke="currentColor" 
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            style={{ width: '1.25rem', height: '1.25rem' }}
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
             strokeWidth={2}
-            style={{
-              width: '1rem',
-              height: '1rem'
-            }}
           >
             <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
           </svg>
-          Download Resume (PDF)
+          View Resume (PDF)
         </a>
       </div>
     </motion.div>
