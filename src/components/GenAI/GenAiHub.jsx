@@ -8,17 +8,15 @@ import VoiceAgent from './VoiceAgent';
 import MBTITest from './MBTITest';
 import HealthMythDebunker from './HealthMythDebunker';
 
-const GenAI = ({ isDark }) => { // isDark prop ko accept karein
+const GenAI = ({ isDark }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.3 }}
-      className="min-h-screen p-6 relative"
       style={{
         minHeight: '100vh',
-        // isDark ke basis par background change karein
         background: isDark
           ? 'linear-gradient(135deg, #1f2937 0%, #111827 100%)'
           : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
@@ -26,25 +24,43 @@ const GenAI = ({ isDark }) => { // isDark prop ko accept karein
         position: 'relative'
       }}
     >
+      {/* Back Button Styled Like Experience.jsx */}
       <Link
         to="/"
-        className="absolute top-6 left-6 bg-white/20 backdrop-blur-sm text-white text-sm px-6 py-3 rounded-full border border-white/30 hover:bg-white/30 transition-all duration-300 shadow-lg font-medium"
+        style={{
+          position: 'absolute',
+          top: '1.5rem',
+          left: '1.5rem',
+          backgroundColor: 'rgba(255, 255, 255, 0.2)',
+          backdropFilter: 'blur(10px)',
+          color: 'white',
+          fontSize: '0.875rem',
+          padding: '0.75rem 1.5rem',
+          borderRadius: '9999px',
+          textDecoration: 'none',
+          border: '1px solid rgba(255, 255, 255, 0.3)',
+          fontWeight: '500',
+          transition: 'all 0.3s ease',
+          boxShadow: '0 8px 24px rgba(0,0,0,0.2)'
+        }}
+        onMouseOver={(e) => (e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.3)')}
+        onMouseOut={(e) => (e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.2)')}
       >
         ← Back to Home
       </Link>
 
-      <div className="max-w-4xl mx-auto pt-20">
-        <div className="text-center mb-12">
+      <div style={{ maxWidth: '56rem', margin: '0 auto', paddingTop: '5rem' }}>
+        <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
           <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>🤖</div>
-          <h2 className="text-4xl font-bold text-white mb-4 drop-shadow-lg">
+          <h2 style={{ fontSize: '2.25rem', fontWeight: 'bold', color: 'white', marginBottom: '1rem' }}>
             Generative AI Showcase
           </h2>
-          <p className="text-lg text-white/90">
+          <p style={{ fontSize: '1.125rem', color: 'rgba(255, 255, 255, 0.9)' }}>
             A collection of my experiments and projects using generative AI.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6">
+        <div style={{ display: 'grid', gap: '1.5rem', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))' }}>
           <PromptCoach />
           <PersonalChef />
           <VoiceAgent />
