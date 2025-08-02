@@ -13,10 +13,11 @@ import Experience from './components/Experience';
 import Education from './components/Education';
 
 // Sub-component imports
-import PromptCoach from "./components/genai/PromptCoach";
-import PersonalChef from './components/genai/PersonalChef';
-import MBTI from './components/genai/MBTITest';
-import VoiceAgent from './components/genai/VoiceAgent';
+import PromptCoach from "./components/GenAI/PromptCoach";
+import PersonalChef from './components/GenAI/PersonalChef';
+import MBTI from './components/GenAI/MBTITest';
+import VoiceAgent from './components/GenAI/VoiceAgent';
+import HealthMythDebunker from './components/GenAI/HealthMythDebunker';
 
 const Home = ({ toggleDarkMode, isDark }) => {
   const navigate = useNavigate();
@@ -385,6 +386,7 @@ const AppContent = () => {
         <Route path="/GenAI/PersonalChef" element={<PersonalChef />} />
         <Route path="/GenAI/MBTI" element={<MBTI />} />
         <Route path="/GenAI/VoiceAgent" element={<VoiceAgent />} />
+		<Route path="/GenAI/HealthMythDebunker" element={<HealthMythDebunker />} />
       </Routes>
     </AnimatePresence>
   );
