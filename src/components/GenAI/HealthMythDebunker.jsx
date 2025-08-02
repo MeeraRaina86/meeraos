@@ -1,8 +1,19 @@
 import React from "react";
 
+
 const HealthMythDebunker = () => {
   return (
     <div
+
+import { motion } from 'framer-motion';
+
+const HealthMythDebunker = () => {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3, delay: 0.5 }}
+
       className="backdrop-blur-lg bg-white/10 p-6 rounded-2xl shadow-xl border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-105"
       style={{
         backdropFilter: 'blur(16px)',
@@ -78,7 +89,11 @@ const HealthMythDebunker = () => {
           </a>
         </div>
       </div>
+
     </div>
+
+    </motion.div>
+
   );
 };
 
