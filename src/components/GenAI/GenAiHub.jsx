@@ -6,6 +6,7 @@ import PromptCoach from "./PromptCoach";
 import PersonalChef from "./PersonalChef";
 import VoiceAgent from "./VoiceAgent";
 import MBTITest from "./MBTITest";
+import HealthMythDebunker from "./HealthMythDebunker";
 
 const GenAI = () => {
   return (
@@ -107,6 +108,7 @@ const GenAI = () => {
           <PersonalChef />
           <VoiceAgent />
           <MBTITest />
+          <HealthMythDebunker />
         </div>
       </div>
     </motion.div>

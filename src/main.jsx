@@ -17,6 +17,7 @@ import PromptCoach from "./components/genai/PromptCoach";
 import PersonalChef from './components/genai/PersonalChef';
 import MBTI from './components/genai/MBTITest';
 import VoiceAgent from './components/genai/VoiceAgent';
+import HealthMythDebunker from './components/GenAI/HealthMythDebunker';
 
 const Home = ({ toggleDarkMode, isDark }) => {
   const navigate = useNavigate();
@@ -385,6 +386,7 @@ const AppContent = () => {
         <Route path="/GenAI/PersonalChef" element={<PersonalChef />} />
         <Route path="/GenAI/MBTI" element={<MBTI />} />
         <Route path="/GenAI/VoiceAgent" element={<VoiceAgent />} />
+		<Route path="/GenAI/HealthMythDebunker" element={<HealthMythDebunker />} />
       </Routes>
     </AnimatePresence>
   );
