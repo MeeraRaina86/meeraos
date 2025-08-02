@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
-const Contact = () => {
+const Contact = ({ isDark }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -12,7 +12,9 @@ const Contact = () => {
       className="min-h-screen p-6 relative"
       style={{
         minHeight: '100vh',
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)',
+        background: isDark
+          ? 'linear-gradient(135deg, #1f2937 0%, #111827 100%)'
+          : 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)',
         padding: '1.5rem',
         position: 'relative'
       }}
@@ -39,8 +41,8 @@ const Contact = () => {
       >
         ← Back to Home
       </Link>
-      
-      <div 
+
+      <div
         className="max-w-xl mx-auto pt-20"
         style={{
           maxWidth: '36rem',
@@ -48,14 +50,14 @@ const Contact = () => {
           paddingTop: '5rem'
         }}
       >
-        <div 
+        <div
           className="text-center mb-8"
           style={{
             textAlign: 'center',
             marginBottom: '2rem'
           }}
         >
-          <div 
+          <div
             style={{
               fontSize: '4rem',
               marginBottom: '1rem'
@@ -63,8 +65,8 @@ const Contact = () => {
           >
             📞
           </div>
-          
-          <h2 
+
+          <h2
             className="text-4xl font-bold text-white mb-4 drop-shadow-lg"
             style={{
               fontSize: '2.25rem',
@@ -76,8 +78,8 @@ const Contact = () => {
           >
             Get In Touch
           </h2>
-          
-          <p 
+
+          <p
             className="text-lg text-white/90"
             style={{
               fontSize: '1.125rem',
@@ -87,8 +89,8 @@ const Contact = () => {
             Let's connect and discuss opportunities
           </p>
         </div>
-        
-        <div 
+
+        <div
           className="backdrop-blur-lg bg-white/10 p-8 rounded-3xl shadow-2xl border border-white/20 space-y-6"
           style={{
             backdropFilter: 'blur(16px)',
@@ -103,7 +105,7 @@ const Contact = () => {
           }}
         >
           {/* Email Contact */}
-          <div 
+          <div
             className="flex items-center p-4 bg-white/10 rounded-2xl border border-white/20 hover:bg-white/20 transition-all duration-300"
             style={{
               display: 'flex',
@@ -115,7 +117,7 @@ const Contact = () => {
               transition: 'all 0.3s ease'
             }}
           >
-            <div 
+            <div
               style={{
                 fontSize: '1.5rem',
                 marginRight: '1rem'
@@ -124,7 +126,7 @@ const Contact = () => {
               ✉️
             </div>
             <div>
-              <h3 
+              <h3
                 className="text-white font-semibold text-lg"
                 style={{
                   color: 'white',
@@ -134,7 +136,7 @@ const Contact = () => {
               >
                 Email
               </h3>
-              <a 
+              <a
                 href="mailto:meera.raina011@gmail.com"
                 className="text-white/80 hover:text-white transition-colors"
                 style={{
@@ -149,7 +151,7 @@ const Contact = () => {
           </div>
 
           {/* Phone Contact */}
-          <div 
+          <div
             className="flex items-center p-4 bg-white/10 rounded-2xl border border-white/20 hover:bg-white/20 transition-all duration-300"
             style={{
               display: 'flex',
@@ -161,7 +163,7 @@ const Contact = () => {
               transition: 'all 0.3s ease'
             }}
           >
-            <div 
+            <div
               style={{
                 fontSize: '1.5rem',
                 marginRight: '1rem'
@@ -170,7 +172,7 @@ const Contact = () => {
               📱
             </div>
             <div>
-              <h3 
+              <h3
                 className="text-white font-semibold text-lg"
                 style={{
                   color: 'white',
@@ -180,7 +182,7 @@ const Contact = () => {
               >
                 Phone
               </h3>
-              <a 
+              <a
                 href="tel:+91 9718519929"
                 className="text-white/80 hover:text-white transition-colors"
                 style={{
@@ -195,7 +197,7 @@ const Contact = () => {
           </div>
 
           {/* LinkedIn Contact */}
-          <div 
+          <div
             className="flex items-center p-4 bg-white/10 rounded-2xl border border-white/20 hover:bg-white/20 transition-all duration-300"
             style={{
               display: 'flex',
@@ -207,7 +209,7 @@ const Contact = () => {
               transition: 'all 0.3s ease'
             }}
           >
-            <div 
+            <div
               style={{
                 fontSize: '1.5rem',
                 marginRight: '1rem'
@@ -216,7 +218,7 @@ const Contact = () => {
               💼
             </div>
             <div>
-              <h3 
+              <h3
                 className="text-white font-semibold text-lg"
                 style={{
                   color: 'white',
@@ -226,7 +228,7 @@ const Contact = () => {
               >
                 LinkedIn
               </h3>
-              <a 
+              <a
                 href="https://www.linkedin.com/in/meera-raina-58b54429/"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -243,7 +245,7 @@ const Contact = () => {
           </div>
 
           {/* Location */}
-          <div 
+          <div
             className="flex items-center p-4 bg-white/10 rounded-2xl border border-white/20 hover:bg-white/20 transition-all duration-300"
             style={{
               display: 'flex',
@@ -255,7 +257,7 @@ const Contact = () => {
               transition: 'all 0.3s ease'
             }}
           >
-            <div 
+            <div
               style={{
                 fontSize: '1.5rem',
                 marginRight: '1rem'
@@ -264,7 +266,7 @@ const Contact = () => {
               📍
             </div>
             <div>
-              <h3 
+              <h3
                 className="text-white font-semibold text-lg"
                 style={{
                   color: 'white',
@@ -274,7 +276,7 @@ const Contact = () => {
               >
                 Location
               </h3>
-              <p 
+              <p
                 className="text-white/80"
                 style={{
                   color: 'rgba(255, 255, 255, 0.8)'

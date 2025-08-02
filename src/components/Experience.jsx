@@ -1,267 +1,155 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
-const ExperienceCard = ({ role, company, dates, details, icon, index }) => (
+// This is a self-contained card component using inline styles.
+const ExperienceCard = ({ role, company, dates, details, logoSrc, index }) => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.3, delay: index * 0.1 }}
-    className="backdrop-blur-lg bg-white/10 p-6 rounded-2xl shadow-xl border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-[1.02]"
     style={{
+      width: '100%',
       backdropFilter: 'blur(16px)',
       backgroundColor: 'rgba(255, 255, 255, 0.1)',
       padding: '1.5rem',
       borderRadius: '1rem',
-      boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+      boxShadow: '0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04)',
       border: '1px solid rgba(255, 255, 255, 0.2)',
-      marginBottom: '1.5rem',
-      transition: 'all 0.3s ease'
+      color: 'white',
     }}
   >
-    <div 
-      className="flex items-start space-x-4 mb-4"
-      style={{
+    <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem', marginBottom: '1rem' }}>
+      <div style={{
+        width: '3.5rem',
+        height: '3.5rem',
+        flexShrink: 0,
+        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+        padding: '0.5rem',
+        borderRadius: '0.5rem',
         display: 'flex',
-        alignItems: 'flex-start',
-        gap: '1rem',
-        marginBottom: '1rem'
-      }}
-    >
-      <div 
-        className="text-3xl"
-        style={{
-          fontSize: '2rem',
-          flexShrink: 0
-        }}
-      >
-        {icon}
+        alignItems: 'center',
+        justifyContent: 'center',
+        border: '1px solid rgba(255, 255, 255, 0.2)',
+      }}>
+        <img src={logoSrc} alt={`${company} logo`} style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} />
       </div>
-      <div className="flex-1">
-        <h3 
-          className="text-xl font-bold text-white mb-1"
-          style={{
-            fontSize: '1.25rem',
-            fontWeight: 'bold',
-            color: 'white',
-            marginBottom: '0.25rem'
-          }}
-        >
-          {role}
-        </h3>
-        <p 
-          className="font-semibold text-white/90 text-lg"
-          style={{
-            fontWeight: '600',
-            color: 'rgba(255, 255, 255, 0.9)',
-            fontSize: '1.125rem'
-          }}
-        >
-          {company}
-        </p>
-        <p 
-          className="text-sm text-white/70 mt-1"
-          style={{
-            fontSize: '0.875rem',
-            color: 'rgba(255, 255, 255, 0.7)',
-            marginTop: '0.25rem'
-          }}
-        >
-          {dates}
-        </p>
+
+      <div style={{ flex: 1 }}>
+        <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '0.25rem' }}>{role}</h3>
+        <p style={{ fontWeight: '600', color: 'rgba(255, 255, 255, 0.9)', fontSize: '1.125rem' }}>{company}</p>
+        <p style={{ fontSize: '0.875rem', color: 'rgba(255, 255, 255, 0.7)', marginTop: '0.25rem' }}>{dates}</p>
       </div>
     </div>
     
-    <div 
-      className="space-y-2"
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '0.5rem'
-      }}
-    >
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
       {details.map((detail, detailIndex) => (
-        <div 
-          key={detailIndex}
-          className="flex items-start space-x-2"
-          style={{
-            display: 'flex',
-            alignItems: 'flex-start',
-            gap: '0.5rem'
-          }}
-        >
-          <div 
-            className="text-white/80 mt-1"
-            style={{
-              color: 'rgba(255, 255, 255, 0.8)',
-              marginTop: '0.25rem',
-              flexShrink: 0
-            }}
-          >
-            •
-          </div>
-          <p 
-            className="text-white/90 text-sm leading-relaxed"
-            style={{
-              color: 'rgba(255, 255, 255, 0.9)',
-              fontSize: '0.875rem',
-              lineHeight: '1.6'
-            }}
-          >
-            {detail}
-          </p>
+        <div key={detailIndex} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem' }}>
+          <div style={{ color: 'rgba(255, 255, 255, 0.8)', marginTop: '0.25rem' }}>•</div>
+          <p style={{ color: 'rgba(255, 255, 255, 0.9)', fontSize: '0.875rem', lineHeight: '1.6' }}>{detail}</p>
         </div>
       ))}
     </div>
   </motion.div>
 );
 
-const Experience = () => {
+const Experience = ({ isDark }) => {
+  const navigate = useNavigate();
+  
   const experiences = [
     {
-      role: "Delivery Manager / Scrum Master",
+      role: "Associate Director Software Development",
+      company: "IQVIA India",
+      dates: "May 2023 - Present",
+      logoSrc: "/iqvia-logo.png",
+      details: ["Skills: Conflict Management, Project Management"]
+    },
+    {
+      role: "Software QA Manager",
       company: "IQVIA",
-      dates: "Apr 2019 - Present",
-      icon: "🚀",
-      details: [
-        "Transitioned across roles from Test Manager to Scrum Master to Release Manager",
-        "Managed release cycles and Agile ceremonies for critical product launches in US healthcare",
-        "Spearheaded prompt-based automation initiatives using Gen AI tools",
-        "Received Bronze and Silver Impact Awards for exceptional contribution"
-      ]
+      dates: "Apr 2019 - May 2023",
+      logoSrc: "/iqvia-logo.png",
+      details: ["Managed release cycles and Agile ceremonies for critical product launches.", "Received Bronze and Silver Impact Awards for exceptional contribution."]
     },
     {
       role: "Team Lead",
       company: "Accenture",
-      dates: "Apr 2015 - Apr 2019",
-      icon: "👥",
-      details: [
-        "Led distributed Agile teams in healthcare accounts",
-        "Improved delivery timelines through process automation",
-        "Honored with the ACE Award for high-impact delivery"
-      ]
+      dates: "May 2015 - Apr 2019",
+      logoSrc: "/accenture-logo.png",
+      details: ["Led distributed Agile teams in healthcare accounts.", "Improved delivery timelines through process automation."]
     },
     {
-      role: "Senior Test Engineer",
+      role: "Test Engineer",
       company: "CSC",
-      dates: "Feb 2011 - Apr 2015",
-      icon: "🔧",
-      details: [
-        "Key contributor to Agile transformation",
-        "Developed test automation and defect management practices"
-      ]
+      dates: "Feb 2011 - Nov 2013",
+      logoSrc: "/csc-logo.png",
+      details: ["Key contributor to Agile transformation.", "Developed test automation and defect management practices."]
     },
     {
-      role: "Assistant Systems Engineer",
+      role: "ASE",
       company: "TCS",
       dates: "Nov 2008 - Feb 2011",
-      icon: "⚙️",
-      details: [
-        "Delivered system testing and collaborated with developers to resolve defects early in SDLC"
-      ]
+      logoSrc: "/tcs-logo.png",
+      details: ["Delivered system testing and collaborated with developers to resolve defects early in SDLC."]
     }
   ];
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
       transition={{ duration: 0.3 }}
-      className="min-h-screen p-6 relative"
       style={{
         minHeight: '100vh',
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)',
+        width: '100%',
         padding: '1.5rem',
-        position: 'relative'
+        position: 'relative',
+        color: 'white',
+        background: isDark
+          ? 'linear-gradient(135deg, rgb(31, 41, 55) 0%, rgb(17, 24, 39) 100%)'
+          : 'linear-gradient(135deg, rgb(102, 126, 234) 0%, rgb(118, 75, 162) 100%)',
       }}
     >
-      <Link
-        to="/"
-        className="absolute top-6 left-6 bg-white/20 backdrop-blur-sm text-white text-sm px-6 py-3 rounded-full border border-white/30 hover:bg-white/30 transition-all duration-300 shadow-lg font-medium"
+      <button 
+        onClick={() => navigate("/")}
         style={{
-          position: 'absolute',
-          top: '1.5rem',
-          left: '1.5rem',
-          backgroundColor: 'rgba(255, 255, 255, 0.2)',
-          backdropFilter: 'blur(10px)',
-          color: 'white',
-          fontSize: '0.875rem',
-          padding: '0.75rem 1.5rem',
-          borderRadius: '9999px',
-          border: '1px solid rgba(255, 255, 255, 0.3)',
-          textDecoration: 'none',
-          fontWeight: '500',
-          boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-          transition: 'all 0.3s ease'
+            position: 'absolute',
+            top: '1.5rem',
+            left: '1.5rem',
+            backgroundColor: 'rgba(255, 255, 255, 0.2)',
+            backdropFilter: 'blur(10px)',
+            color: 'white',
+            fontSize: '0.875rem',
+            padding: '0.75rem 1.5rem',
+            borderRadius: '9999px',
+            border: '1px solid rgba(255, 255, 255, 0.3)',
+            cursor: 'pointer',
+            fontWeight: '500'
         }}
       >
         ← Back to Home
-      </Link>
-
-      <div 
-        className="max-w-4xl mx-auto pt-20"
-        style={{
-          maxWidth: '56rem',
-          margin: '0 auto',
-          paddingTop: '5rem'
-        }}
-      >
-        {/* Header */}
-        <div 
-          className="text-center mb-12"
-          style={{
-            textAlign: 'center',
-            marginBottom: '3rem'
-          }}
-        >
-          <div 
-            style={{
-              fontSize: '4rem',
-              marginBottom: '1rem'
-            }}
-          >
+      </button>
+      
+      <div style={{ maxWidth: '56rem', margin: '0 auto', paddingTop: '5rem' }}>
+        <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+          <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>
             💼
           </div>
-          
-          <h2 
-            className="text-4xl font-bold text-white mb-4 drop-shadow-lg"
-            style={{
-              fontSize: '2.25rem',
-              fontWeight: 'bold',
-              color: 'white',
-              marginBottom: '1rem',
-              textShadow: '0 4px 8px rgba(0, 0, 0, 0.3)'
-            }}
-          >
+          <h2 style={{ fontSize: '2.25rem', fontWeight: 'bold', color: 'white', marginBottom: '1rem' }}>
             Professional Experience
           </h2>
-          
-          <p 
-            className="text-lg text-white/90"
-            style={{
-              fontSize: '1.125rem',
-              color: 'rgba(255, 255, 255, 0.9)'
-            }}
-          >
+          <p style={{ fontSize: '1.125rem', color: 'rgba(255, 255, 255, 0.9)' }}>
             My journey through various roles in technology
           </p>
         </div>
-
-        {/* Experience Cards */}
-        <div 
-          className="space-y-6"
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '1.5rem'
-          }}
-        >
+        
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem' }}>
           {experiences.map((experience, index) => (
-            <ExperienceCard
-              key={index}
-              {...experience}
-              index={index}
+            <ExperienceCard 
+              key={index} 
+              {...experience} 
+              index={index} 
             />
           ))}
         </div>

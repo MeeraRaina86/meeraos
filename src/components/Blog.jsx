@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import { motion } from 'framer-motion';
 
-export default function Blog() {
+export default function Blog({ isDark }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -12,7 +12,9 @@ export default function Blog() {
       className="min-h-screen flex items-center justify-center p-6 relative"
       style={{
         minHeight: '100vh',
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)',
+        background: isDark
+          ? 'linear-gradient(135deg, #1f2937 0%, #111827 100%)'
+          : 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -42,8 +44,8 @@ export default function Blog() {
       >
         ← Back to Home
       </Link>
-      
-      <div 
+
+      <div
         className="text-center backdrop-blur-lg bg-white/10 p-12 rounded-3xl shadow-2xl border border-white/20 max-w-lg"
         style={{
           textAlign: 'center',
@@ -56,7 +58,7 @@ export default function Blog() {
           maxWidth: '32rem'
         }}
       >
-        <div 
+        <div
           style={{
             fontSize: '4rem',
             marginBottom: '1.5rem'
@@ -64,8 +66,8 @@ export default function Blog() {
         >
           ✍️
         </div>
-        
-        <h2 
+
+        <h2
           className="text-4xl font-bold text-white mb-6 drop-shadow-lg"
           style={{
             fontSize: '2.25rem',
@@ -77,8 +79,8 @@ export default function Blog() {
         >
           My Blog
         </h2>
-        
-        <p 
+
+        <p
           className="text-lg text-white/90 mb-8 leading-relaxed"
           style={{
             fontSize: '1.125rem',
@@ -89,7 +91,7 @@ export default function Blog() {
         >
           Welcome to my personal blog where I share insights on technology, project management, and AI innovations.
         </p>
-        
+
         <a
           href="https://ctrlaltopinion.wordpress.com/"
           target="_blank"

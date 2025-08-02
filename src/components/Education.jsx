@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
-const Education = () => {
+const Education = ({ isDark }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -18,7 +18,9 @@ const Education = () => {
         justifyContent: 'center',
         padding: '1rem',
         position: 'relative',
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)'
+        background: isDark
+          ? 'linear-gradient(135deg, #1f2937 0%, #111827 100%)'
+          : 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)'
       }}
     >
       <Link 
@@ -44,6 +46,7 @@ const Education = () => {
         ← Back to Home
       </Link>
       
+      {/* Main content card */}
       <div 
         className="text-center backdrop-blur-lg bg-white/10 p-12 rounded-3xl shadow-2xl border border-white/20 max-w-2xl"
         style={{
@@ -79,6 +82,7 @@ const Education = () => {
           Education
         </h2>
         
+        {/* Inner card for details */}
         <div 
           className="backdrop-blur-lg bg-white/20 p-8 rounded-2xl shadow-xl border border-white/30"
           style={{

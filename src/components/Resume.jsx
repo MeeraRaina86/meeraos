@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
-const Resume = () => {
+const Resume = ({ isDark }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -19,10 +19,9 @@ const Resume = () => {
         justifyContent: 'center',
         padding: '1rem',
         position: 'relative',
-        backgroundColor: '#f3f4f6'
+        backgroundColor: isDark ? '#111827' : '#f3f4f6' // Dark mode background
       }}
     >
-      {/* Back button positioned at the top left */}
       <Link 
         to="/" 
         className="absolute top-4 left-4 bg-gray-200 dark:bg-gray-700 text-sm px-4 py-2 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
@@ -30,13 +29,9 @@ const Resume = () => {
           position: 'absolute',
           top: '1rem',
           left: '1rem',
-          backgroundColor: '#e5e7eb',
-          fontSize: '0.875rem',
-          padding: '0.5rem 1rem',
-          borderRadius: '0.5rem',
+          backgroundColor: isDark ? 'rgba(255, 255, 255, 0.1)' : '#e5e7eb',
+          color: isDark ? 'white' : '#374151',
           textDecoration: 'none',
-          color: '#374151',
-          transition: 'background-color 0.2s'
         }}
       >
         ← Back
@@ -52,51 +47,27 @@ const Resume = () => {
             fontSize: '1.875rem',
             fontWeight: 'bold',
             marginBottom: '1rem',
-            color: '#111827'
+            color: isDark ? 'white' : '#111827'
           }}
         >
           View My Professional Profile
         </h2>
         <p 
-          className="text-gray-600 dark:text-gray-300 mb-8"
+          className="mb-8"
           style={{
-            color: '#4b5563',
+            color: isDark ? '#d1d5db' : '#4b5563',
             marginBottom: '2rem'
           }}
         >
           Click the button below to view or download my resume.
         </p>
         
-        {/* Modern, eye-catching button for the resume link with properly sized icon */}
         <a
           href="https://drive.google.com/file/d/1pAtu9gx93vnzZ15uHxh9e1MgWa66yXrV/view?usp=sharing"
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-3 text-lg px-8 py-4 bg-gradient-to-r from-purple-500 to-blue-600 text-white rounded-lg shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 transform"
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '0.75rem',
-            fontSize: '1.125rem',
-            padding: '1rem 2rem',
-            background: 'linear-gradient(to right, #8b5cf6, #2563eb)',
-            color: 'white',
-            borderRadius: '0.5rem',
-            boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
-            textDecoration: 'none',
-            transition: 'all 0.3s',
-            transform: 'scale(1)'
-          }}
-          onMouseEnter={(e) => {
-            e.target.style.transform = 'scale(1.05)';
-            e.target.style.boxShadow = '0 20px 25px -5px rgba(0, 0, 0, 0.1)';
-          }}
-          onMouseLeave={(e) => {
-            e.target.style.transform = 'scale(1)';
-            e.target.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.1)';
-          }}
         >
-          {/* Fixed icon size to be much smaller */}
           <svg 
             xmlns="http://www.w3.org/2000/svg" 
             className="h-4 w-4" 

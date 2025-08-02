@@ -8,7 +8,7 @@ import VoiceAgent from './VoiceAgent';
 import MBTITest from './MBTITest';
 import HealthMythDebunker from './HealthMythDebunker';
 
-const GenAI = () => {
+const GenAI = ({ isDark }) => { // isDark prop ko accept karein
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -18,7 +18,10 @@ const GenAI = () => {
       className="min-h-screen p-6 relative"
       style={{
         minHeight: '100vh',
-        background: 'linear-gradient(135deg, #1f2937 0%, #111827 100%)',
+        // isDark ke basis par background change karein
+        background: isDark
+          ? 'linear-gradient(135deg, #1f2937 0%, #111827 100%)'
+          : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
         padding: '1.5rem',
         position: 'relative'
       }}
