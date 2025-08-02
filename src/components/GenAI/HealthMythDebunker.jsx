@@ -18,7 +18,7 @@ const HealthMythDebunker = () => {
         transition: 'all 0.3s ease'
       }}
     >
-      <div 
+      <div
         className="flex items-start space-x-4"
         style={{
           display: 'flex',
@@ -26,7 +26,7 @@ const HealthMythDebunker = () => {
           gap: '1rem'
         }}
       >
-        <div 
+        <div
           className="text-4xl"
           style={{
             fontSize: '2.5rem',
@@ -36,7 +36,7 @@ const HealthMythDebunker = () => {
           🏥
         </div>
         <div className="flex-1">
-          <h3 
+          <h3
             className="text-xl font-bold text-white mb-3"
             style={{
               fontSize: '1.25rem',
@@ -48,7 +48,7 @@ const HealthMythDebunker = () => {
           >
             Health Myth Debunker
           </h3>
-          <p 
+          <p
             className="text-white/80 text-sm mb-4 leading-relaxed"
             style={{
               color: 'rgba(255, 255, 255, 0.8)',
