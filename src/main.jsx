@@ -1,18 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 
-import './index.css';
+import AskMeera from './pages/AskMeera';
 import Resume from "./components/Resume";
 import Contact from "./components/Contact";
-import GenAI from "./components/GenAI/GenAiHub.jsx";
+import GenAI from "./components/GenAI/GenAiHub";
 import Certifications from "./components/Certifications";
 import Blog from './components/Blog';
 import Experience from './components/Experience';
 import Education from './components/Education';
-
-// Sub-component imports are handled within GenAiHub.jsx, so they are not needed here.
+import './index.css';
 
 const Home = ({ toggleDarkMode, isDark }) => {
   const navigate = useNavigate();
@@ -41,7 +40,6 @@ const Home = ({ toggleDarkMode, isDark }) => {
     >
       <button
         onClick={toggleDarkMode}
-        className="absolute top-4 right-4 bg-white/20 backdrop-blur-sm text-white text-sm px-4 py-2 rounded-full border border-white/30 hover:bg-white/30 transition-all duration-300 shadow-lg"
         style={{
           position: 'absolute',
           top: '1rem',
@@ -62,7 +60,6 @@ const Home = ({ toggleDarkMode, isDark }) => {
       </button>
 
       <div
-        className="w-full max-w-lg text-center backdrop-blur-lg bg-white/10 p-8 rounded-3xl shadow-2xl border border-white/20"
         style={{
           width: '100%',
           maxWidth: '32rem',
@@ -76,7 +73,6 @@ const Home = ({ toggleDarkMode, isDark }) => {
         }}
       >
         <div
-          className="w-32 h-32 mx-auto mb-6 rounded-full overflow-hidden border-4 border-white/30 shadow-xl"
           style={{
             width: '8rem',
             height: '8rem',
@@ -90,16 +86,11 @@ const Home = ({ toggleDarkMode, isDark }) => {
           <img
             src="/meera-profile.jpg"
             alt="Meera Raina"
-            style={{
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover'
-            }}
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           />
         </div>
 
         <h1
-          className="text-4xl font-bold mb-8 text-white drop-shadow-lg"
           style={{
             fontSize: '2.5rem',
             fontWeight: 'bold',
@@ -112,20 +103,20 @@ const Home = ({ toggleDarkMode, isDark }) => {
         </h1>
 
         <div
-          className="grid grid-cols-4 gap-6"
           style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(4, 1fr)',
             gap: '1.5rem'
           }}
         >
-            <AppIcon onClick={() => handleAppClick("Resume")} icon="📄" name="Resume" />
-            <AppIcon onClick={() => handleAppClick("Experience")} icon="💼" name="Experience" />
-            <AppIcon onClick={() => handleAppClick("Education")} icon="🎓" name="Education" />
-            <AppIcon onClick={() => handleAppClick("Blog")} icon="✍️" name="Blog" />
-            <AppIcon onClick={() => handleAppClick("GenAI")} icon="⚙️" name="Gen AI Work" />
-            <AppIcon onClick={() => handleAppClick("Certifications")} icon="🏆" name="Certs" />
-            <AppIcon onClick={() => handleAppClick("Contact")} icon="📞" name="Contact" />
+          <AppIcon onClick={() => handleAppClick("Resume")} icon="📄" name="Resume" />
+          <AppIcon onClick={() => handleAppClick("Experience")} icon="💼" name="Experience" />
+          <AppIcon onClick={() => handleAppClick("Education")} icon="🎓" name="Education" />
+          <AppIcon onClick={() => handleAppClick("Blog")} icon="✍️" name="Blog" />
+          <AppIcon onClick={() => handleAppClick("GenAI")} icon="⚙️" name="Gen AI Work" />
+          <AppIcon onClick={() => handleAppClick("Certifications")} icon="🏆" name="Certs" />
+          <AppIcon onClick={() => handleAppClick("Contact")} icon="📞" name="Contact" />
+          <AppIcon onClick={() => handleAppClick("AskMeera")} icon="💬" name="Ask Meera" />
         </div>
       </div>
     </motion.div>
@@ -133,47 +124,51 @@ const Home = ({ toggleDarkMode, isDark }) => {
 };
 
 const AppIcon = ({ onClick, icon, name }) => (
+  <div
+    onClick={onClick}
+    style={{
+      cursor: 'pointer',
+      textAlign: 'center',
+      padding: '0.75rem',
+      borderRadius: '0.75rem',
+      backgroundColor: 'rgba(255, 255, 255, 0.1)',
+      border: '1px solid rgba(255, 255, 255, 0.2)',
+      backdropFilter: 'blur(4px)',
+      transition: 'all 0.3s ease'
+    }}
+    className="hover:scale-110 transition-all duration-300"
+  >
+    <div style={{ fontSize: '1.5rem' }}>{icon}</div>
     <div
-      onClick={onClick}
-      className="cursor-pointer text-center hover:scale-110 transition-all duration-300 p-3 rounded-xl bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20"
       style={{
-        cursor: 'pointer',
-        textAlign: 'center',
-        padding: '0.75rem',
-        borderRadius: '0.75rem',
-        backgroundColor: 'rgba(255, 255, 255, 0.1)',
-        border: '1px solid rgba(255, 255, 255, 0.2)',
-        backdropFilter: 'blur(4px)',
-        transition: 'all 0.3s ease'
+        marginTop: '0.25rem',
+        fontSize: '0.875rem',
+        fontWeight: '500',
+        color: 'white'
       }}
     >
-      <div
-        className="text-2xl"
-        style={{ fontSize: '1.5rem' }}
-      >
-        {icon}
-      </div>
-      <div
-        className="mt-1 text-sm font-medium"
-        style={{
-          marginTop: '0.25rem',
-          fontSize: '0.875rem',
-          fontWeight: '500',
-          color: 'white'
-        }}
-      >
-        {name}
-      </div>
+      {name}
     </div>
+  </div>
 );
 
 const AppContent = () => {
   const location = useLocation();
   const [isDark, setIsDark] = useState(false);
 
+  useEffect(() => {
+    const storedMode = localStorage.getItem('darkMode');
+    if (storedMode === 'true') {
+      setIsDark(true);
+      document.documentElement.classList.add("dark");
+    }
+  }, []);
+
   const toggleDarkMode = () => {
-    setIsDark(!isDark);
+    const newMode = !isDark;
+    setIsDark(newMode);
     document.documentElement.classList.toggle("dark");
+    localStorage.setItem('darkMode', newMode);
   };
 
   return (
@@ -187,6 +182,8 @@ const AppContent = () => {
         <Route path="/Certifications" element={<Certifications isDark={isDark} />} />
         <Route path="/Experience" element={<Experience isDark={isDark} />} />
         <Route path="/Education" element={<Education isDark={isDark} />} />
+        <Route path="/AskMeera" element={<AskMeera isDark={isDark} />} />
+        <Route path="*" element={<Home toggleDarkMode={toggleDarkMode} isDark={isDark} />} />
       </Routes>
     </AnimatePresence>
   );
