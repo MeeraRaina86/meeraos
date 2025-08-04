@@ -2,9 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
+// Importing all the original components
 import PromptCoach from "./PromptCoach";
 import PersonalChef from './PersonalChef';
-import VoiceAgent from './VoiceAgent';
+import VoiceAgent from './VoiceAgent'; // The original one with the phone number
 import MBTITest from './MBTITest';
 import HealthMythDebunker from './HealthMythDebunker';
 
@@ -24,7 +25,6 @@ const GenAI = ({ isDark }) => {
         position: 'relative'
       }}
     >
-      {/* Back Button Styled Like Experience.jsx */}
       <Link
         to="/"
         style={{
@@ -60,12 +60,13 @@ const GenAI = ({ isDark }) => {
           </p>
         </div>
 
+        {/* Notice the VapiAgent is removed from this grid for the test */}
         <div style={{ display: 'grid', gap: '1.5rem', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))' }}>
           <PromptCoach />
           <PersonalChef />
-          <VoiceAgent />
-          <MBTITest />
           <HealthMythDebunker />
+          <MBTITest />
+          <VoiceAgent />
         </div>
       </div>
     </motion.div>

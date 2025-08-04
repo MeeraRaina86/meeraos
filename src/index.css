@@ -2,11 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Body gradient for light mode and solid color for dark mode */
-body {
-  @apply bg-gradient-to-br from-purple-100 via-pink-50 to-yellow-100 text-gray-900 transition-colors duration-300 dark:bg-gray-900 dark:text-white;
-}
-
 /* Custom scrollbar for chat area */
 .custom-scroll::-webkit-scrollbar {
   width: 6px;
