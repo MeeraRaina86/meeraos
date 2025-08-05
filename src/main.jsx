@@ -14,39 +14,30 @@ import Experience from './components/Experience';
 import Education from './components/Education';
 import './index.css';
 
-// This is the new, fully functional Vapi button component with an End Call button
 const VapiCallButton = () => {
   const vapiKey = "d6e67255-b1fa-4ae1-9fea-1cbc3c26aefc";
   const assistantId = "bc2dbcf6-a04b-4015-8fff-2802aa7335e4";
-
-  // Use state to hold the vapi instance and call status
   const [vapi, setVapi] = useState(null);
   const [isCalling, setIsCalling] = useState(false);
 
-  // Initialize Vapi only once
   useEffect(() => {
-    setVapi(new Vapi(vapiKey));
-  }, [vapiKey]);
-
-  // Add event listeners for when the call starts and ends
-  useEffect(() => {
-    if (!vapi) return;
+    const vapiInstance = new Vapi(vapiKey);
+    setVapi(vapiInstance);
 
     const onCallStart = () => setIsCalling(true);
     const onCallEnd = () => setIsCalling(false);
+    vapiInstance.on('call-start', onCallStart);
+    vapiInstance.on('call-end', onCallEnd);
 
-    vapi.on('call-start', onCallStart);
-    vapi.on('call-end', onCallEnd);
-
-    // Cleanup listeners when component unmounts
     return () => {
-      vapi.off('call-start', onCallStart);
-      vapi.off('call-end', onCallEnd);
+      vapiInstance.off('call-start', onCallStart);
+      vapiInstance.off('call-end', onCallEnd);
     };
-  }, [vapi]);
+  }, []);
 
   const startVapiCall = () => {
     if (vapi) {
+      // Ab hum sirf Assistant ID bhej rahe hain. Prompt Vapi dashboard se aayega.
       vapi.start(assistantId);
     }
   };
@@ -56,7 +47,7 @@ const VapiCallButton = () => {
       vapi.stop();
     }
   };
-
+  
   const iconStyle = {
     cursor: 'pointer',
     textAlign: 'center',
@@ -68,30 +59,21 @@ const VapiCallButton = () => {
     transition: 'all 0.3s ease',
   };
   
-  // Conditionally render the "End Call" button
   if (isCalling) {
     return (
       <div
         onClick={stopVapiCall}
-        style={{...iconStyle, backgroundColor: 'rgba(239, 68, 68, 0.3)'}} // Red background for end call
+        style={{...iconStyle, backgroundColor: 'rgba(239, 68, 68, 0.3)'}}
         className="hover:scale-110 transition-all duration-300"
       >
         <div style={{ fontSize: '1.5rem' }}>📞</div>
-        <div
-          style={{
-            marginTop: '0.25rem',
-            fontSize: '0.875rem',
-            fontWeight: '500',
-            color: 'white'
-          }}
-        >
+        <div style={{ marginTop: '0.25rem', fontSize: '0.875rem', fontWeight: '500', color: 'white' }}>
           End Call
         </div>
       </div>
     );
   }
 
-  // Render the "Start Call" button by default
   return (
     <div
       onClick={startVapiCall}
@@ -99,14 +81,7 @@ const VapiCallButton = () => {
       className="hover:scale-110 transition-all duration-300"
     >
       <div style={{ fontSize: '1.5rem' }}>💁‍♀️</div>
-      <div
-        style={{
-          marginTop: '0.25rem',
-          fontSize: '0.875rem',
-          fontWeight: '500',
-          color: 'white'
-        }}
-      >
+      <div style={{ marginTop: '0.25rem', fontSize: '0.875rem', fontWeight: '500', color: 'white' }}>
         Talk to AI Assistant
       </div>
     </div>
