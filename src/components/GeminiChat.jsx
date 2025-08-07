@@ -7,61 +7,113 @@ const GeminiChat = ({ isDark }) => {
   const [loading, setLoading] = useState(false);
   const bottomRef = useRef(null);
 
+  const [schedulingDetails, setSchedulingDetails] = useState(null);
+  const messagesRef = useRef([]);
+
+  useEffect(() => {
+    messagesRef.current = { messages, schedulingDetails };
+  }, [messages, schedulingDetails]);
+
+  const pipedreamWebhookUrl = "https://eo9b5px3y3o09gl.m.pipedream.net";
+
+  // Naya, aur bhi zyada intelligent prompt
   const meeraContext = `
-You are Meera Raina — a GenAI Project Manager and Consultant with 16+ years of experience across US healthcare, pharmacovigilance, and enterprise IT transformation.
+You are Meera Raina's AI Assistant. Your primary goal is to represent Meera accurately and assist users.
 
-🎭 Personality:
-Speak in first person ("I"), maintain a firm yet polite tone. You are confident, articulate, and always professional. You do not guess — if unsure, say "I’ll need to get back to you on that." Keep responses concise, clear, and friendly.
+// CORE PROFESSIONAL INFO
+You can answer basic questions about Meera's professional background. She is a GenAI Project Manager and Consultant with over 16 years of experience in US healthcare, pharmacovigilance, and enterprise IT transformation. She is currently an Associate Director at IQVIA.
 
-📌 About Me:
-I’m currently working as a Delivery Manager and Release Manager at IQVIA, where I leverage GenAI tools and prompt engineering skills to automate my tracking monitoring and controlling progress. My prior roles include Team Lead at Accenture, Senior Test Engineer at CSC, and Assistant Systems Engineer at TCS.
+// CRITICAL INSTRUCTION: INTERVIEW SCHEDULING
+- Your single most important task is to identify if a user wants to schedule a call or connect with Meera.
+- When intent is detected, your first step is to CHECK if the user has already provided their full name, email, and company name in their message.
 
-🏆 Awards:
-- Bronze & Silver Impact Awards at IQVIA
-- ACE Award at Accenture
+- **Scenario 1: If details are MISSING:**
+  - If the user has NOT provided all three details, you MUST ask for them. Use this exact script: "I can certainly help with that. To proceed, could you please provide me with your full name, email address, and company name? I will then forward your details to have a scheduling link sent to you."
 
-📍 LinkedIn: https://www.linkedin.com/in/meera-raina-58b54429/
-📍 Notice Period: 3 months
-⛔ Do not answer salary or CTC-related questions. Politely decline.
+- **Scenario 2: If details are PROVIDED:**
+  - If the user has already provided all three details (like "My name is Michael Scott, I work at Dunder Mifflin, email is mscott@dundermifflin.com"), you must NOT ask for them again.
+  - Instead, you must IMMEDIATELY respond with the final confirmation.
+
+// FINAL RESPONSE FORMAT
+- After you have all three details, your final response MUST STRICTLY follow this format.
+- **Your EXACT Response MUST BE:** "Perfect, I have your details. The scheduling link will be sent to you shortly. Here is the confirmation: <SCHEDULE_DETAILS>{"fullName": "USER_FULL_NAME", "email": "USER_EMAIL", "companyName": "USER_COMPANY"}</SCHEDULE_DETAILS>"
+- You must fill in the USER_FULL_NAME, USER_EMAIL, and USER_COMPANY with the information the user provided.
 `;
+
+  const sendDetailsToPipedream = async (details) => {
+    if (!pipedreamWebhookUrl.startsWith('http')) return;
+    try {
+      await fetch(pipedreamWebhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(details),
+      });
+    } catch (error) {
+      console.error("Failed to send details to Pipedream:", error);
+    }
+  };
+
+  useEffect(() => {
+    return () => {
+      const { messages: finalMessages, schedulingDetails: finalDetails } = messagesRef.current;
+      if (finalMessages.length > 0) {
+        // This is a simplified logger that just sends the transcript
+        // The details are sent instantly when captured
+      }
+    };
+  }, []);
 
   const handleSend = async () => {
     if (!userInput.trim()) return;
+    const geminiApiKey = import.meta.env.VITE_GEMINI_API_KEY;
+    if (!geminiApiKey) {
+      setMessages((prev) => [...prev, { role: 'model', content: '❌ Configuration error. The Gemini API key is missing.' }]);
+      return;
+    }
 
-    const userMessage = { role: 'user', content: userInput };
+    const currentInput = userInput;
+    const userMessage = { role: 'user', content: currentInput };
     setMessages((prev) => [...prev, userMessage]);
     setUserInput('');
     setLoading(true);
 
     try {
-      const fullPrompt = `${meeraContext}\n\nUser: ${userInput}`;
+      const fullPrompt = `${meeraContext}\n\nUser: ${currentInput}`;
       const res = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${import.meta.env.VITE_GEMINI_API_KEY}`,
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${geminiApiKey}`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            contents: [{ role: 'user', parts: [{ text: fullPrompt }] }]
-          })
+          body: JSON.stringify({ contents: [{ role: 'user', parts: [{ text: fullPrompt }] }] })
         }
       );
 
-      if (!res.ok) {
-        throw new Error(`API request failed with status ${res.status}`);
-      }
+      if (!res.ok) throw new Error(`API request failed`);
       
       const data = await res.json();
-      const botText = data?.candidates?.[0]?.content?.parts?.[0]?.text || 'I am not sure how to respond to that. Could you please rephrase?';
+      let botText = data?.candidates?.[0]?.content?.parts?.[0]?.text || 'I am not sure how to respond to that.';
+      
+      const scheduleDetailsMatch = botText.match(/<SCHEDULE_DETAILS>(.*?)<\/SCHEDULE_DETAILS>/);
+      if (scheduleDetailsMatch && scheduleDetailsMatch[1]) {
+        try {
+          const detailsJson = JSON.parse(scheduleDetailsMatch[1]);
+          await sendDetailsToPipedream(detailsJson); // Send details immediately
+          setSchedulingDetails(detailsJson); // Also save to state
+          botText = botText.replace(scheduleDetailsMatch[0], "").trim();
+        } catch (e) {
+          console.error("Could not parse schedule details from AI response:", e);
+        }
+      }
+
       const botMessage = { role: 'model', content: botText };
       setMessages((prev) => [...prev, botMessage]);
     } catch (err) {
       console.error(err);
-      setMessages((prev) => [...prev, { role: 'model', content: '❌ Sorry, I am having trouble connecting. Please try again later.' }]);
+      setMessages((prev) => [...prev, { role: 'model', content: '❌ Sorry, I am having trouble connecting.' }]);
     }
-
     setLoading(false);
   };
-
+  
   const handleKeyPress = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();

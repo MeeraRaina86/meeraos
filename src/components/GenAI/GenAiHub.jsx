@@ -7,6 +7,8 @@ import PersonalChef from './PersonalChef';
 import VoiceAgent from './VoiceAgent';
 import MBTITest from './MBTITest';
 import HealthMythDebunker from './HealthMythDebunker';
+import CuriousSprouts from './CuriousSprouts';
+import RxCheck from './RxCheck';
 
 const GenAI = ({ isDark }) => {
   return (
@@ -66,6 +68,8 @@ const GenAI = ({ isDark }) => {
           <VoiceAgent />
           <MBTITest />
           <HealthMythDebunker />
+          <CuriousSprouts />
+          <RxCheck />
         </div>
       </div>
     </motion.div>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
+import Vapi from '@vapi-ai/web';
 
 import AskMeera from './pages/AskMeera';
 import Resume from "./components/Resume";
@@ -12,6 +13,81 @@ import Blog from './components/Blog';
 import Experience from './components/Experience';
 import Education from './components/Education';
 import './index.css';
+
+const VapiCallButton = () => {
+  const vapiKey = "d6e67255-b1fa-4ae1-9fea-1cbc3c26aefc";
+  const assistantId = "bc2dbcf6-a04b-4015-8fff-2802aa7335e4";
+  const [vapi, setVapi] = useState(null);
+  const [isCalling, setIsCalling] = useState(false);
+
+  useEffect(() => {
+    const vapiInstance = new Vapi(vapiKey);
+    setVapi(vapiInstance);
+
+    const onCallStart = () => setIsCalling(true);
+    const onCallEnd = () => setIsCalling(false);
+    vapiInstance.on('call-start', onCallStart);
+    vapiInstance.on('call-end', onCallEnd);
+
+    return () => {
+      vapiInstance.off('call-start', onCallStart);
+      vapiInstance.off('call-end', onCallEnd);
+    };
+  }, []);
+
+  const startVapiCall = () => {
+    if (vapi) {
+      // Ab hum sirf Assistant ID bhej rahe hain. Prompt Vapi dashboard se aayega.
+      vapi.start(assistantId);
+    }
+  };
+
+  const stopVapiCall = () => {
+    if (vapi) {
+      vapi.stop();
+    }
+  };
+  
+  const iconStyle = {
+    cursor: 'pointer',
+    textAlign: 'center',
+    padding: '0.75rem',
+    borderRadius: '0.75rem',
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    border: '1px solid rgba(255, 255, 255, 0.2)',
+    backdropFilter: 'blur(4px)',
+    transition: 'all 0.3s ease',
+  };
+  
+  if (isCalling) {
+    return (
+      <div
+        onClick={stopVapiCall}
+        style={{...iconStyle, backgroundColor: 'rgba(239, 68, 68, 0.3)'}}
+        className="hover:scale-110 transition-all duration-300"
+      >
+        <div style={{ fontSize: '1.5rem' }}>📞</div>
+        <div style={{ marginTop: '0.25rem', fontSize: '0.875rem', fontWeight: '500', color: 'white' }}>
+          End Call
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div
+      onClick={startVapiCall}
+      style={iconStyle}
+      className="hover:scale-110 transition-all duration-300"
+    >
+      <div style={{ fontSize: '1.5rem' }}>💁‍♀️</div>
+      <div style={{ marginTop: '0.25rem', fontSize: '0.875rem', fontWeight: '500', color: 'white' }}>
+        Talk to AI Assistant
+      </div>
+    </div>
+  );
+};
+
 
 const Home = ({ toggleDarkMode, isDark }) => {
   const navigate = useNavigate();
@@ -117,6 +193,7 @@ const Home = ({ toggleDarkMode, isDark }) => {
           <AppIcon onClick={() => handleAppClick("Certifications")} icon="🏆" name="Certs" />
           <AppIcon onClick={() => handleAppClick("Contact")} icon="📞" name="Contact" />
           <AppIcon onClick={() => handleAppClick("AskMeera")} icon="💬" name="Ask Meera" />
+          <VapiCallButton />
         </div>
       </div>
     </motion.div>
